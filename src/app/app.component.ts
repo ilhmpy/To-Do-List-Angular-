@@ -9,7 +9,7 @@ import { TodoComponent } from './todo/todo.component';
     TodoComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css'  
 })
 
 export class AppComponent {

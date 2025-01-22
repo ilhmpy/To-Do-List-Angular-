@@ -1,8 +1,12 @@
 <main>
     <div class="todo">
-        <div class="todo_menu bg">
+        <div [ngClass]="{ 'menu-active': isMenuVisible && todoItems.length > 0}" class="todo_menu bg">
             <input class="todo_menu-input" placeholder="Write something..." />
-            <div class="todo_menu-arrow" (click)="changeMenuState()">
+            <div 
+                [ngClass]="{ 'arrow-active': isMenuVisible && todoItems.length > 0 }" 
+                class="todo_menu-arrow" 
+                (click)="changeMenuState()"
+            >
                 <span></span>
             </div>
         </div>
@@ -12,23 +16,25 @@
             class="todo_menu todo_items bg"
         >
             <p class="todo_items-title">Status</p>
-            <div *ngFor="let todoItem of todoItems; let i = index">
-                <div class="todo_menu-item">
-                    <div 
-                        [ngClass]="{ 'checked': todoItem.checked }" 
-                        class="todo_menu-item_checkbox"
-                        (click)="changeChackedStatus(i)"
-                    ></div>
-                    <span [ngClass]="{ 'checked_text': todoItem.checked }" class="todo_menu-text">
-                        {{ todoItem.text }}
-                    </span>
-                    <img 
-                        [ngStyle]="{ 'opacity': todoItem.checked ? '100%' : '0%' }"
-                        class="thrash_icon" 
-                        src="/thrash.svg"
-                        (click)="deleteItem(i)"
-                    />
-                </div>
+            <div  
+                *ngFor="let todoItem of todoItems; let i = index"
+                class="todo_menu-item"
+                [@fadeOutRight]="todoItem === removingItem ? 'removing' : 'default'"
+            >
+                <div 
+                    [ngClass]="{ 'checked': todoItem.checked }" 
+                    class="todo_menu-item_checkbox"
+                    (click)="changeChackedStatus(i)"
+                ></div>
+                <span [ngClass]="{ 'checked_text': todoItem.checked }" class="todo_menu-text">
+                    {{ todoItem.text }}
+                </span>
+                <img
+                    [ngStyle]="{ 'opacity': todoItem.checked ? '100%' : '0%' }"
+                    class="thrash_icon" 
+                    src="/thrash.svg"
+                    (click)="deleteItem(i)"
+                 />
             </div>
         </div>
     </div>

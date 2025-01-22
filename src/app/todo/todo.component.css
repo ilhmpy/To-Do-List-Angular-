@@ -3,6 +3,7 @@
     width: 100%;
     overflow-y: hidden;
     position: relative;
+    transition: 1s;
 }
 
 .bg {
@@ -36,6 +37,7 @@
     cursor: pointer;
     position: relative;
     transform: rotate(113deg);
+    transition: 1s;
 }
 
 .todo_menu-arrow > span {
@@ -61,6 +63,10 @@
     height: 100%;
 }
 
+.menu-active {
+    border: 3px solid #008BA1;
+}
+
 .todo_menu-input::placeholder {
     color: #3F444A;
     letter-spacing: 0cap;
@@ -77,6 +83,7 @@
     transition: 1s;
     z-index: -1;
     transform: translateY(-120%);
+    overflow-x: hidden;
 }
 
 .todo_menu-item {
@@ -102,7 +109,7 @@
 .todo_items-title {
     width: 100%;
     text-align: left;
-    margin-bottom: 1.3em;
+    margin-bottom: .5em;
     color: #6C757D;
     font-weight: 550;
 }
@@ -168,4 +175,8 @@
     cursor: pointer;
     opacity: 0%;
     transition: 1s;
+}
+
+.arrow-active {
+    transform: rotate(295deg);
 }
