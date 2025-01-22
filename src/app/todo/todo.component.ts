@@ -73,8 +73,7 @@ export class TodoComponent {
 
         this.todoItems = newTodoItems;
     } 
-
-    // сделать анимацию при удалении(в чатгпт помощь маленькая)
+    
     deleteItem(i: number) {
       const sound = new Audio('/sounds/tothrashsound.mp3');
       sound.play();
