@@ -1,0 +1,149 @@
+.todo {
+    font-family: "Inter", sans-serif;
+    width: 100%;
+    height: 100%;
+}
+
+.bg {
+    background: #FFFF;
+    border-radius: .5em;  
+    border: 3px solid #DEE2E6;
+}
+
+.todo_menu {
+    user-select: none;
+    width: 17em;
+    height: 3.2em;
+    display: flex;
+    padding-left: 1em;
+    padding-right: .7em;
+    position: relative;
+    font-weight: 500;
+    align-items: center;
+    justify-content: left;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5em;
+}
+
+.todo_menu-arrow {
+    width: 2em;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transform: rotate(113deg);
+}
+
+.todo_menu-arrow > span {
+    width: 30%;
+    height: .2em;
+    background: #ABB5BE;
+    display: block;
+    transform: rotate(20deg);
+}
+
+.todo_menu-arrow > span::after {
+    content: "";
+    width: 30%;
+    height: .6em;
+    background: #ABB5BE;
+    display: block;
+    top: 0;
+    position: absolute;
+    right: 0;
+}
+
+.todo_menu-input {
+    height: 100%;
+}
+
+.todo_menu-input::placeholder {
+    color: #3F444A;
+    letter-spacing: 0cap;
+    font-size: 1.2em;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+}
+
+.todo_items {
+    padding-top: 1em;
+    height: auto;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.todo_menu-item {
+    width: 100%;
+    height: 2em;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-direction: row;
+    gap: .5em;  
+    margin-bottom: .5em;
+    position: relative;
+}
+
+.todo_menu-text {  
+    width: 13em;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+}
+
+.todo_items-title {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 1.3em;
+    color: #6C757D;
+    font-weight: 550;
+}
+
+.todo_menu-item_checkbox {
+    width: 1.4em;
+    height: 1.4em;
+    border-radius: .4em;
+    cursor: pointer;
+    border: 2.4px solid #BFBFBF;   
+}
+
+.checked {
+    background: #008BA1;
+    border: 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checked_text {
+    color: #008BA1;
+}
+
+.checked::before {
+    content: "";
+    display: block;
+    width: .3em;
+    height: .1em;
+    background: #FFF;
+    transform: rotate(50deg);
+    position: absolute;
+    left: .32em;
+    bottom: .55em;
+}
+
+.checked::after {
+    content: "";
+    display: block;
+    width: .8em;
+    height: .1em;
+    background: #FFF;
+    transform: rotate(-50deg);
+    position: absolute;
+    right: .22em;
+    bottom: .7em;
+}
