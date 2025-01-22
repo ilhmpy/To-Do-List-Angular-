@@ -1,7 +1,8 @@
 .todo {
     font-family: "Inter", sans-serif;
     width: 100%;
-    height: 100%;
+    overflow-y: hidden;
+    position: relative;
 }
 
 .bg {
@@ -22,8 +23,8 @@
     align-items: center;
     justify-content: left;
     display: flex;
+    z-index: 2;
     justify-content: space-between;
-    margin-bottom: .5em;
 }
 
 .todo_menu-arrow {
@@ -73,6 +74,9 @@
     height: auto;
     flex-direction: column;
     justify-content: left;
+    transition: 1s;
+    z-index: -1;
+    transform: translateY(-120%);
 }
 
 .todo_menu-item {
@@ -146,4 +150,22 @@
     position: absolute;
     right: .22em;
     bottom: .7em;
+}
+
+.menu_on {
+    transform: translateY(0);
+}
+
+.zIndex {
+    z-index: -1;
+}
+
+.thrash_icon {
+    position: absolute;
+    right: .2em;
+    width: 1.2em;
+    height: 1.2em;
+    cursor: pointer;
+    opacity: 0%;
+    transition: 1s;
 }
