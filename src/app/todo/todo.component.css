@@ -1,5 +1,4 @@
 .todo {
-    font-family: "Inter", sans-serif;
     width: 100%;
     overflow-y: hidden;
     position: relative;
@@ -26,6 +25,7 @@
     display: flex;
     z-index: 2;
     justify-content: space-between;
+    transition: 1s;
 }
 
 .todo_menu-arrow {
@@ -82,13 +82,14 @@
     justify-content: left;
     transition: 1s;
     z-index: -1;
-    transform: translateY(-120%);
+    transform: translateY(-150%);
     overflow-x: hidden;
 }
 
 .todo_menu-item {
     width: 100%;
-    height: 2em;
+    height: auto;
+    min-height: 2em;
     display: flex;
     justify-content: left;
     align-items: center;
@@ -99,7 +100,7 @@
 }
 
 .todo_menu-text {  
-    width: 13em;
+    width: 11.5em;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -167,16 +168,48 @@
     z-index: -1;
 }
 
-.thrash_icon {
+.icon {
     position: absolute;
-    right: .2em;
     width: 1.2em;
     height: 1.2em;
     cursor: pointer;
-    opacity: 0%;
     transition: 1s;
+}
+
+.thrash_icon {
+    right: .2em;
+}
+
+.edit_icon {
+    right: .2em;
 }
 
 .arrow-active {
     transform: rotate(295deg);
+}
+
+.edited_text {
+    display: none;
+}
+
+.todo_items-input {
+    width: 100%;
+    height: auto;
+    font-size: 1.3em;
+    padding-left: .5em;
+}
+
+.todo_notification {
+    margin-bottom: .2em;
+    border: 3px solid #00A181;
+    color: #00A181;
+    z-index: 0;
+    position: absolute;
+    transition: 1s ease-in-out;
+    bottom: 1em;
+    transform: translateY(150%);
+}
+
+.notification-active {
+    transform: translateY(0);
 }

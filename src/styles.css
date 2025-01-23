@@ -6,6 +6,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    font-family: "Inter", sans-serif;
+    overflow-y: hidden;
 }
 
 * {
@@ -33,4 +35,13 @@ p {
     margin: 0;
     line-height: 1em;
     padding: 0;
+}
+
+textarea {
+    user-select: none;
+    border: 0;
+}
+
+textarea:focus {
+    outline: none;
 }
