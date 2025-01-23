@@ -13,6 +13,16 @@ interface EditingItemInputValueInterface {
   i: number | null;
 }
 
+interface NotificationInterface {
+  text: string;
+  isVisible: boolean;
+}
+
+const Notifications = [
+  "No more than 10 tasks allowed", 
+  "you wrote more than 200 charactes"
+];
+
 @Component({
   selector: 'app-todo',
   imports: [ 
@@ -31,8 +41,6 @@ interface EditingItemInputValueInterface {
   styleUrl: './todo.component.css'
 })
 
-
-
 export class TodoComponent {
     @ViewChild('todoItemsElement') todoItemsElement?: ElementRef<HTMLDivElement>;
     todoValue: string = "";
@@ -42,10 +50,10 @@ export class TodoComponent {
     editingItem: TodoItem | null = null;
     editingItemInputValue: EditingItemInputValueInterface = { value: "", i: null };
 
-    notification: boolean = false;
+    notification: NotificationInterface = { text: "", isVisible: false };
 
     todoItems: TodoItem[] = [
-      { text: "hmmmRIRa", checked: false },
+      /*{ text: "hmmmRIRa", checked: false },
       { text: "hmmmKOK3", checked: false },
       { text: "hmmmRÖRt", checked: false },
       { text: "hmmmLALfg", checked: false },
@@ -54,7 +62,7 @@ export class TodoComponent {
       { text: "hmmmRÖRfg1", checked: false },
       { text: "hmmmLAL34a", checked: false },
       { text: "hmmmRIR;q", checked: false },
-      { text: "hmmmKOK5;42", checked: false },
+      { text: "hmmmKOK5;42", checked: false },*/
     ];
 
     changeMenuState() {
@@ -94,19 +102,26 @@ export class TodoComponent {
       }
     }
 
-    // если больше 10 то так же показать уведомление что не возможно добавить новый элемент
+    UseNotification(notificationsType: number) {
+      this.notification = { text: Notifications[notificationsType], isVisible: true };
+
+      setTimeout(() => {
+        this.notification = { ...this.notification, isVisible: false };
+      }, 4000);
+    }
+
     onEnter(event: KeyboardEvent) {
       if (event.key === "Enter") {
         if (this.todoItems.length < 10) {
+          if (this.todoValue.length > 200) {
+            this.UseNotification(0);
+            return;
+          }
+
           this.todoItems = [{ text: this.todoValue, checked: false }, ...this.todoItems];
           this.todoValue = "";
         } else {
           this.todoValue = "";
-          this.notification = true;
-
-          setTimeout(() => {
-            this.notification = false;
-          }, 4000);
         }
       }   
     }
@@ -116,18 +131,20 @@ export class TodoComponent {
         this.editingItem = this.todoItems[i];
         this.editingItemInputValue = { value: this.todoItems[i].text, i };
       } else {
-        if (this.todoItems[i].text !== this.editingItemInputValue.value) {
+        if (this.editingItemInputValue.value.length < 200) {
           this.todoItems = this.todoItems.map((todoItem: TodoItem, idx: number) => {
             if (idx === i) {
               return { ...todoItem, text: this.editingItemInputValue.value }
             }
+
+            this.editingItem = null;
+            this.editingItemInputValue = { value: "", i: null };
   
             return todoItem;
           });
+        } else {
+          this.UseNotification(1);
         }
-
-        this.editingItem = null;
-        this.editingItemInputValue = { value: "", i: null };
       }
     } 
 

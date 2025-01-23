@@ -1,8 +1,17 @@
+.main {
+    overflow: hidden;
+}
+
 .todo {
-    width: 100%;
+    width: auto;
     overflow-y: hidden;
     position: relative;
     transition: 1s;
+    padding-top: 2em;
+}
+
+.todo-wrapper {
+    overflow-y: hidden;
 }
 
 .bg {
@@ -212,4 +221,18 @@
 
 .notification-active {
     transform: translateY(0);
+}
+
+.app-log-button {
+    position: absolute;
+    width: 4em;
+    height: 1.5em;
+    border-radius: .5em;
+    background: #008BA1;
+    cursor: pointer;
+    top: 1em;
+    right: 1em;
+    display: block;
+    color: #FFFF;
+    font-size: 20px;
 }

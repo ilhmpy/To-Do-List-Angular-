@@ -1,80 +1,83 @@
-<main>
+<main class="main">
+    <button class="app-log-button">Log In</button>
     <div 
-        [ngClass]="{ 'notification-active': notification }"
+        [ngClass]="{ 'notification-active': notification.isVisible}"
         class="todo_notification todo_menu bg"
     >
-        No more than 10 tasks allowed
+        {{ notification.text }}
     </div>
     <div class="todo">
-        <div 
-            [ngClass]="{ 'menu-active': isMenuVisible && todoItems.length > 0}" 
-            class="todo_menu bg"
-        >
-            <input 
-                class="todo_menu-input" 
-                placeholder="Write something..."
-                [(ngModel)]="todoValue"
-                (keydown)="onEnter($event)"
-            />
+        <div class="todo-wrapper">
             <div 
-                [ngClass]="{ 'arrow-active': isMenuVisible && todoItems.length > 0 }" 
-                class="todo_menu-arrow" 
-                (click)="changeMenuState()"
+                [ngClass]="{ 'menu-active': isMenuVisible && todoItems.length > 0}" 
+                class="todo_menu bg"
             >
-                <span></span>
-            </div>
-        </div>
-        <div 
-            #todoItemsElement
-            [ngClass]="{ 'menu_on': isMenuVisible && todoItems.length > 0}" 
-            class="todo_menu todo_items bg"
-        >
-            <p class="todo_items-title">Status</p>
-            <div  
-                *ngFor="let todoItem of todoItems; let i = index"
-                class="todo_menu-item"
-                [@fadeOutRight]="todoItem === removingItem ? 'removing' : 'default'"
-            >
-                <div 
-                    [ngClass]="{ 
-                        'checked': todoItem.checked, 
-                        'edited_text': todoItem === editingItem 
-                    }" 
-                    class="todo_menu-item_checkbox"
-                    (click)="changeCheckedStatus(i)"
-                ></div>
-
-                <span 
-                    [ngClass]="{ 'checked_text': todoItem.checked }"
-                    [ngClass]="{ 'edited_text': todoItem === editingItem }" 
-                    class="todo_menu-text"
-                >
-                    {{ todoItem.text }}
-                </span>
-
-                <textarea
-                    [ngClass]="{ 'edited_text': todoItem !== editingItem }"
-                    class="todo_items-input"
-                    [value]="editingItemInputValue.value"
-                    [(ngModel)]="editingItemInputValue.value"
-                    (keydown)="onEditingInput($event, i)"
-                >
-                    {{ editingItemInputValue.value }}
-                </textarea>
-
-                <img 
-                    src="/edit.png"
-                    class="icon edit_icon"
-                    *ngIf="!todoItem.checked"
-                    (click)="onEdit(i)"
+                <input 
+                    class="todo_menu-input" 
+                    placeholder="Write something..."
+                    [(ngModel)]="todoValue"
+                    (keydown)="onEnter($event)"
                 />
+                <div 
+                    [ngClass]="{ 'arrow-active': isMenuVisible && todoItems.length > 0 }" 
+                    class="todo_menu-arrow" 
+                    (click)="changeMenuState()"
+                >
+                    <span></span>
+                </div>
+            </div>
+            <div 
+                #todoItemsElement
+                [ngClass]="{ 'menu_on': isMenuVisible && todoItems.length > 0}" 
+                class="todo_menu todo_items bg"
+            >
+                <p class="todo_items-title">Status</p>
+                <div  
+                    *ngFor="let todoItem of todoItems; let i = index"
+                    class="todo_menu-item"
+                    [@fadeOutRight]="todoItem === removingItem ? 'removing' : 'default'"
+                >
+                    <div 
+                        [ngClass]="{ 
+                            'checked': todoItem.checked, 
+                            'edited_text': todoItem === editingItem 
+                        }" 
+                        class="todo_menu-item_checkbox"
+                        (click)="changeCheckedStatus(i)"
+                    ></div>
 
-                <img
-                    *ngIf="todoItem.checked"
-                    class="icon thrash_icon" 
-                    src="/thrash.svg"
-                    (click)="deleteItem(i)"
-                 />
+                    <span 
+                        [ngClass]="{ 'checked_text': todoItem.checked }"
+                        [ngClass]="{ 'edited_text': todoItem === editingItem }" 
+                        class="todo_menu-text"
+                    >
+                        {{ todoItem.text }}
+                    </span>
+
+                    <textarea
+                        [ngClass]="{ 'edited_text': todoItem !== editingItem }"
+                        class="todo_items-input"
+                        [value]="editingItemInputValue.value"
+                        [(ngModel)]="editingItemInputValue.value"
+                        (keydown)="onEditingInput($event, i)"
+                    >
+                        {{ editingItemInputValue.value }}
+                    </textarea>
+
+                    <img 
+                        src="/edit.png"
+                        class="icon edit_icon"
+                        *ngIf="!todoItem.checked"
+                        (click)="onEdit(i)"
+                    />
+
+                    <img
+                        *ngIf="todoItem.checked"
+                        class="icon thrash_icon" 
+                        src="/thrash.svg"
+                        (click)="deleteItem(i)"
+                    />
+                </div>
             </div>
         </div>
     </div>
