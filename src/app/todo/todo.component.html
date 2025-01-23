@@ -62,7 +62,7 @@
                         (keydown)="onEditingInput($event, i)"
                     >
                         {{ TruncatedText }}
-                        <span [ngStyle]="{ 'color': '#AFAF' }" *ngIf="TruncatedText" class="excess-text">
+                        <span [ngStyle]="{ 'color': 'red' }" *ngIf="TruncatedText" class="excess-text">
                             {{ ExcessText }}
                         </span>
                     </textarea>

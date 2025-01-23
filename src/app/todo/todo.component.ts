@@ -54,21 +54,13 @@ export class TodoComponent {
 
     todoItems: TodoItem[] = [];
     
-    // сделать так что бы меню закрывалось когда уже нету элементов и открывалось когда появился
+    // сделать так что бы меню закрывалось когда уже нету элементов и открывалось когда появились
     // сделать так что бы и при нажатии на стрелочку тоже менялось положение меню
     // скорее всего проблема в реализации с isMenuVisible && todoItems.length > 0 || todoItems.length > 0
     // разобраться в чем причина и сделать рефакторинг для исправления 
 
     changeMenuState() {
       this.isMenuVisible = !this.isMenuVisible;
-
-      if (this.isMenuVisible) {
-        setTimeout(() => {
-          if (this.todoItemsElement) {
-            this.todoItemsElement.nativeElement.style.zIndex = "0";
-          }
-        }, 1000);
-      }
     }
 
     changeCheckedStatus(i: number) {
@@ -104,10 +96,12 @@ export class TodoComponent {
       }, 4000);
     }
 
+
+    // переписать систему уведомлений что бы те подходили для каждого вида ошибки
     onEnter(event: KeyboardEvent) {
       if (event.key === "Enter" && this.editingItemInputValue.value === "") {
         if (this.todoItems.length < 10) {
-          if (this.todoValue.length > 200) {
+          if (this.todoValue.length > 200 || this.todoValue.length < 5) {
             this.UseNotification(0);
             return;
           }
@@ -159,6 +153,10 @@ export class TodoComponent {
         this.ChangeItemText(i);
       }
     }
+    
+    // реализовать подсветку текста красным в случае того если символов больше 200 
+    // с помощью div contentedditable="true"
+    // перенести 200 и 5 в константы
     
     get TruncatedText() {
       if (this.editingItemInputValue) {
