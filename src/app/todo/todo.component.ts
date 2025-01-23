@@ -20,7 +20,7 @@ interface NotificationInterface {
 
 const Notifications = [
   "No more than 10 tasks allowed", 
-  "you wrote more than 200 charactes"
+  "you wrote more than 200 charactes or less than 5 charactes"
 ];
 
 @Component({
@@ -52,18 +52,12 @@ export class TodoComponent {
 
     notification: NotificationInterface = { text: "", isVisible: false };
 
-    todoItems: TodoItem[] = [
-      /*{ text: "hmmmRIRa", checked: false },
-      { text: "hmmmKOK3", checked: false },
-      { text: "hmmmRÖRt", checked: false },
-      { text: "hmmmLALfg", checked: false },
-      { text: "hmmmRIR1", checked: false },
-      { text: "hmmmKOK5t", checked: false },
-      { text: "hmmmRÖRfg1", checked: false },
-      { text: "hmmmLAL34a", checked: false },
-      { text: "hmmmRIR;q", checked: false },
-      { text: "hmmmKOK5;42", checked: false },*/
-    ];
+    todoItems: TodoItem[] = [];
+    
+    // сделать так что бы меню закрывалось когда уже нету элементов и открывалось когда появился
+    // сделать так что бы и при нажатии на стрелочку тоже менялось положение меню
+    // скорее всего проблема в реализации с isMenuVisible && todoItems.length > 0 || todoItems.length > 0
+    // разобраться в чем причина и сделать рефакторинг для исправления 
 
     changeMenuState() {
       this.isMenuVisible = !this.isMenuVisible;
@@ -111,7 +105,7 @@ export class TodoComponent {
     }
 
     onEnter(event: KeyboardEvent) {
-      if (event.key === "Enter") {
+      if (event.key === "Enter" && this.editingItemInputValue.value === "") {
         if (this.todoItems.length < 10) {
           if (this.todoValue.length > 200) {
             this.UseNotification(0);
@@ -131,24 +125,25 @@ export class TodoComponent {
         this.editingItem = this.todoItems[i];
         this.editingItemInputValue = { value: this.todoItems[i].text, i };
       } else {
-        if (this.editingItemInputValue.value.length < 200) {
+        if (this.editingItemInputValue.value.length < 200 && this.editingItemInputValue.value.length > 5) {
           this.todoItems = this.todoItems.map((todoItem: TodoItem, idx: number) => {
             if (idx === i) {
               return { ...todoItem, text: this.editingItemInputValue.value }
             }
-
-            this.editingItem = null;
-            this.editingItemInputValue = { value: "", i: null };
   
             return todoItem;
           });
         } else {
           this.UseNotification(1);
         }
+
+        this.editingItem = null;
+        this.editingItemInputValue = { value: "", i: null };
       }
     } 
 
     onEdit(i: number) {
+      console.log(this.editingItemInputValue)
       if (
         this.editingItemInputValue.i === i || 
         this.editingItemInputValue.i === null
@@ -163,5 +158,19 @@ export class TodoComponent {
       if (event.key == "Enter") {
         this.ChangeItemText(i);
       }
+    }
+    
+    get TruncatedText() {
+      if (this.editingItemInputValue) {
+        return this.editingItemInputValue.value.length > 200 ? 
+          this.editingItemInputValue.value.slice(0, 200) :
+          this.editingItemInputValue.value;
+      } else {
+        return this.editingItemInputValue;
+      }
+    }
+
+    get ExcessText() {
+      return this.editingItemInputValue.value.slice(200);
     }
 }

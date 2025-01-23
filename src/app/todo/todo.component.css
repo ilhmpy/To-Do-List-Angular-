@@ -90,7 +90,7 @@
     flex-direction: column;
     justify-content: left;
     transition: 1s;
-    z-index: -1;
+    z-index: 0;
     transform: translateY(-150%);
     overflow-x: hidden;
 }
@@ -173,10 +173,6 @@
     transform: translateY(0);
 }
 
-.zIndex {
-    z-index: -1;
-}
-
 .icon {
     position: absolute;
     width: 1.2em;
@@ -209,6 +205,9 @@
 }
 
 .todo_notification {
+    height: auto;
+    justify-content: center;
+    padding: 1em;
     margin-bottom: .2em;
     border: 3px solid #00A181;
     color: #00A181;
@@ -235,4 +234,8 @@
     display: block;
     color: #FFFF;
     font-size: 20px;
+}
+
+.excess-text {
+    color: red;
 }

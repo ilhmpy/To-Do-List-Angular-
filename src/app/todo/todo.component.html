@@ -9,7 +9,7 @@
     <div class="todo">
         <div class="todo-wrapper">
             <div 
-                [ngClass]="{ 'menu-active': isMenuVisible && todoItems.length > 0}" 
+                [ngClass]="{ 'menu-active': isMenuVisible && todoItems.length > 0 || todoItems.length > 0}" 
                 class="todo_menu bg"
             >
                 <input 
@@ -19,7 +19,7 @@
                     (keydown)="onEnter($event)"
                 />
                 <div 
-                    [ngClass]="{ 'arrow-active': isMenuVisible && todoItems.length > 0 }" 
+                    [ngClass]="{ 'arrow-active': isMenuVisible && todoItems.length > 0 || todoItems.length > 0}" 
                     class="todo_menu-arrow" 
                     (click)="changeMenuState()"
                 >
@@ -28,7 +28,7 @@
             </div>
             <div 
                 #todoItemsElement
-                [ngClass]="{ 'menu_on': isMenuVisible && todoItems.length > 0}" 
+                [ngClass]="{ 'menu_on': isMenuVisible && todoItems.length > 0 || todoItems.length > 0}" 
                 class="todo_menu todo_items bg"
             >
                 <p class="todo_items-title">Status</p>
@@ -61,7 +61,10 @@
                         [(ngModel)]="editingItemInputValue.value"
                         (keydown)="onEditingInput($event, i)"
                     >
-                        {{ editingItemInputValue.value }}
+                        {{ TruncatedText }}
+                        <span [ngStyle]="{ 'color': '#AFAF' }" *ngIf="TruncatedText" class="excess-text">
+                            {{ ExcessText }}
+                        </span>
                     </textarea>
 
                     <img 
