@@ -1,22 +1,41 @@
 <main class="main">
     <button class="app-log-button">Log In</button>
-    <div 
-        [ngClass]="{ 'notification-active': notification.isVisible}"
+    <div
+        [ngClass]="{ 
+            'notification-active': 
+                todoValueForm.get('todoValue')?.errors?.['minlength'] &&
+                showNotification
+            }" 
         class="todo_notification todo_menu bg"
     >
-        {{ notification.text }}
+        The field have less than 5 characters 
     </div>
+
+    <div
+        [ngClass]="{ 
+            'notification-active': 
+                todoValueForm.get('todoValue')?.errors?.['maxlength'] &&
+                showNotification
+            }" 
+        class="todo_notification todo_menu bg"
+    >
+        No more than 200 characters allowed
+    </div>
+
     <div class="todo">
         <div class="todo-wrapper">
             <div 
                 [ngClass]="{ 'menu-active': isMenuVisible && todoItems.length > 0 || todoItems.length > 0}" 
                 class="todo_menu bg"
+                [formGroup]="todoValueForm"
             >
                 <input 
                     class="todo_menu-input" 
                     placeholder="Write something..."
-                    [(ngModel)]="todoValue"
+                    formControlName="todoValue"
                     (keydown)="onEnter($event)"
+                    minlength="5"
+                    maxlength="200"
                 />
                 <div 
                     [ngClass]="{ 'arrow-active': isMenuVisible && todoItems.length > 0 || todoItems.length > 0}" 
