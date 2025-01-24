@@ -3,7 +3,10 @@
     <div
         [ngClass]="{ 
             'notification-active': 
-                todoValueForm.get('todoValue')?.errors?.['minlength'] &&
+                (
+                    todoValueForm.get('todoValue')?.errors?.['minlength'] || 
+                    todoValueForm.get('editingItemValue')?.errors?.['minlength']
+                ) &&
                 showNotification
             }" 
         class="todo_notification todo_menu bg"
@@ -14,7 +17,10 @@
     <div
         [ngClass]="{ 
             'notification-active': 
-                todoValueForm.get('todoValue')?.errors?.['maxlength'] &&
+                (
+                    todoValueForm.get('todoValue')?.errors?.['maxlength'] ||
+                    todoValueForm.get('editingItemValue')?.errors?.['maxlength']
+                ) &&
                 showNotification
             }" 
         class="todo_notification todo_menu bg"
@@ -22,10 +28,23 @@
         No more than 200 characters allowed
     </div>
 
+    <div
+        [ngClass]="{ 
+            'notification-active': 
+                (
+                    todoValueForm.get('todoValue')?.errors?.['required']
+                ) &&
+                showNotification
+            }" 
+        class="todo_notification todo_menu bg"
+    >
+        The field is empty
+    </div>
+
     <div class="todo">
         <div class="todo-wrapper">
             <div 
-                [ngClass]="{ 'menu-active': isMenuVisible && todoItems.length > 0 || todoItems.length > 0}" 
+                [ngClass]="{ 'menu-active': todoItems.length > 0}" 
                 class="todo_menu bg"
                 [formGroup]="todoValueForm"
             >
@@ -38,16 +57,16 @@
                     maxlength="200"
                 />
                 <div 
-                    [ngClass]="{ 'arrow-active': isMenuVisible && todoItems.length > 0 || todoItems.length > 0}" 
+                    [ngClass]="{ 'arrow-active': todoItems.length > 0}" 
                     class="todo_menu-arrow" 
-                    (click)="changeMenuState()"
+
                 >
                     <span></span>
                 </div>
             </div>
             <div 
                 #todoItemsElement
-                [ngClass]="{ 'menu_on': isMenuVisible && todoItems.length > 0 || todoItems.length > 0}" 
+                [ngClass]="{ 'menu_on': todoItems.length > 0}" 
                 class="todo_menu todo_items bg"
             >
                 <p class="todo_items-title">Status</p>
@@ -55,11 +74,12 @@
                     *ngFor="let todoItem of todoItems; let i = index"
                     class="todo_menu-item"
                     [@fadeOutRight]="todoItem === removingItem ? 'removing' : 'default'"
+                    [formGroup]="todoValueForm"
                 >
                     <div 
                         [ngClass]="{ 
                             'checked': todoItem.checked, 
-                            'edited_text': todoItem === editingItem 
+                            'edited_text': todoValueForm.get('editingItemValue')?.value !== null 
                         }" 
                         class="todo_menu-item_checkbox"
                         (click)="changeCheckedStatus(i)"
@@ -67,23 +87,19 @@
 
                     <span 
                         [ngClass]="{ 'checked_text': todoItem.checked }"
-                        [ngClass]="{ 'edited_text': todoItem === editingItem }" 
+                        [ngClass]="{ 'edited_text': todoValueForm.get('editingItemValue')?.value !== null }" 
                         class="todo_menu-text"
                     >
                         {{ todoItem.text }}
                     </span>
 
                     <textarea
-                        [ngClass]="{ 'edited_text': todoItem !== editingItem }"
+                        [ngClass]="{ 'edited_text': todoValueForm.get('editingItemValue')?.value === null }"
                         class="todo_items-input"
-                        [value]="editingItemInputValue.value"
-                        [(ngModel)]="editingItemInputValue.value"
-                        (keydown)="onEditingInput($event, i)"
+                        formControlName="editingItemValue"
+                        minlength="5"
+                        maxlength="200"
                     >
-                        {{ TruncatedText }}
-                        <span [ngStyle]="{ 'color': 'red' }" *ngIf="TruncatedText" class="excess-text">
-                            {{ ExcessText }}
-                        </span>
                     </textarea>
 
                     <img 
